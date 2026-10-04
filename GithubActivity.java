@@ -1,17 +1,19 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GithubActivity {
 
     public static void main(String[] args) {
 
-        if(args.length == 0) {
+        CliOptions options = CliOptions.parse(args);
 
-            System.out.println("<Usage>: java GithubActivity <username>");
+        if(options == null) {
 
+            System.out.println("<Usage>: java GithubActivity <username> [--type <EventType>] [--group]");
             return;
         }
 
-        String username = args[0];
+        String username = options.getUsername();
 
         GithubClient githubClient = new GithubClient();
 
@@ -29,13 +31,35 @@ public class GithubActivity {
                 return;
             }
 
-            System.out.println("Number of events: " + events.size());
+            List<Event> matching = new ArrayList<>();
 
             for(String eventText : events) {
 
                 Event event = parser.parseEvent(eventText);
 
-                System.out.println(event.getType() + "  |  " + event.getRepoName() + "  |  " + event.getAction());
+                if(EventFilter.matches(event, options.getFilterType())) {
+
+                    matching.add(event);
+                }
+
+                if(matching.isEmpty()) {
+
+                    System.out.println("No " + options.getFilterType() + " found for " + username);
+                    return;
+                }
+            }
+
+            if(options.isGroup()) {
+
+                GroupedPrinter.print(matching);
+            }
+
+            else {
+
+                for(Event event : matching) {
+
+                    System.out.println("- " + EventFormatter.format(event));
+                }
             }
         }
 

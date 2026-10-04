@@ -19,9 +19,6 @@ Based on the [GitHub User Activity](https://roadmap.sh/projects/github-user-acti
 
 ## Planned
 
-- [ ] Print each event as a friendly sentence (for example, `Starred owner/repo`)
-- [ ] Filter activity by event type
-- [ ] Show the activity in a more structured format
 - [ ] Cache fetched data to avoid repeated API calls
 
 ## Requirements
@@ -47,14 +44,6 @@ Example:
 
 ```bash
 java Main kamranahmedse
-```
-
-Current output (one line per event: type, repository, action):
-
-```
-WatchEvent | kamranahmedse/developer-roadmap | started
-IssuesEvent | someuser/some-repo | opened
-PushEvent | someuser/some-repo | null
 ```
 
 `null` means the event type has no action (push events, for example).
