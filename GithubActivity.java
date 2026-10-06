@@ -19,7 +19,18 @@ public class GithubActivity {
 
         try {
 
-            String json = githubClient.fetchEvents(username);
+            String json = ActivityCache.load(username);
+
+            if(json == null) {
+
+                json = githubClient.fetchEvents(username);
+                ActivityCache.save(username, json);
+            }
+            
+            else {
+
+                System.out.println("Showing saved result, less than 5 minutes old");
+            }
 
             EventParser parser = new EventParser();
             List<String> events = parser.splitEvents(json);

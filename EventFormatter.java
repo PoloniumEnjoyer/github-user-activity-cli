@@ -119,7 +119,7 @@ public class EventFormatter {
 
             default:
 
-                return type;type 
+                return type;
         }
     }
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class GroupedPrinter {
  
-    
     public static void print(List<Event> events) {
 
         Map<String, List<Event>> groups = new LinkedHashMap<>();

@@ -1,6 +1,5 @@
 public class Event {
     
-
     private final String type;
     private final String repoName;
     private final String action;
